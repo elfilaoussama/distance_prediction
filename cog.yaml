@@ -1,0 +1,26 @@
+# cog.yaml
+
+# Build configuration for your Docker image
+build:
+  # Specify the version of Python to use
+  python_version: "3.11"  # Set to 3.11
+  gpu : false
+
+  # List of Python packages to install from PyPi
+  python_requirements: requirements.txt
+  
+  run:
+    - apt-get update && apt-get install -y \
+      build-essential \
+      libgl1-mesa-glx \
+      libglib2.0-0 \
+      && rm -rf /var/lib/apt/lists/*
+
+    - pip install --upgrade pip
+
+  # Optional: commands to run after packages installation
+  run:
+    - echo "Setup complete"
+  
+# Predict configuration pointing to the Predictor class
+predict: "predict.py:Predictor"  # Path to the Predictor class in your code
