@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation - WebSocket Image Upload</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100 font-sans leading-relaxed">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-[#384B70] to-[#507687] text-white py-12 shadow-lg">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-5xl font-extrabold">API Documentation</h1>
+            <p class="text-lg mt-4">WebSocket Image Upload Service</p>
+        </div>
+    </header>
+
+    <!-- Navigation Bar (Placed Below Title Area) -->
+    <nav class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto flex justify-center space-x-8 py-4">
+            <a href="#endpoint" class="text-gray-700 hover:text-blue-500 hover:underline transition-all duration-200">Endpoint</a>
+            <a href="#html-js" class="text-gray-700 hover:text-blue-500 hover:underline transition-all duration-200">HTML + JavaScript Example</a>
+            <a href="#python" class="text-gray-700 hover:text-blue-500 hover:underline transition-all duration-200">Python Example</a>
+            <a href="#flutter" class="text-gray-700 hover:text-blue-500 hover:underline transition-all duration-200">Flutter Example</a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto px-4 py-6 bg-white rounded-lg shadow-md mt-8 space-y-8">
+
+        <!-- Introduction Section -->
+        <section>
+            <h2 class="text-3xl font-bold mb-4">Introduction</h2>
+            <p class="text-lg leading-relaxed mb-6">
+                Welcome to the WebSocket Image Upload API. This API allows clients to send images via WebSocket and receive processed data such as object detection and depth estimation in real-time. Below is a detailed guide on how to use this API with different client technologies.
+            </p>
+        </section>
+
+        <!-- WebSocket Endpoint Section -->
+        <section id="endpoint">
+            <h2 class="text-3xl font-bold mb-4">WebSocket Endpoint</h2>
+            <p class="text-lg mb-4">The WebSocket API endpoint is:</p>
+            <pre class="bg-gray-100 rounded-md p-4 text-sm"><code class="language-json">ws://your-domain.com/ws</code></pre>
+        </section>
+
+        <!-- HTML + JavaScript Example -->
+        <section id="html-js">
+            <h2 class="text-3xl font-bold mb-4">HTML + JavaScript Example</h2>
+            <p class="text-lg mb-4">Here's how to use the WebSocket API with plain HTML and JavaScript. This example allows a user to select an image, resize it, and send it to the server.</p>
+
+            <h3 class="text-2xl font-semibold mb-2">HTML Snippet</h3>
+            <pre class="bg-gray-100 rounded-md p-4 overflow-auto text-sm"><code class="language-markup">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;WebSocket Image Upload with Resizing&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;input type="file" accept="image/*" id="fileInput" /&gt;
+    &lt;button id="sendButton" disabled&gt;Send Image&lt;/button&gt;
+    &lt;div id="loading"&gt;Processing...&lt;/div&gt;
+    &lt;div id="message"&gt;&lt;/div&gt;
+    &lt;script src="upload.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </code></pre>
+
+            <h3 class="text-2xl font-semibold mb-2">JavaScript Snippet</h3>
+            <pre class="bg-gray-100 rounded-md p-4 overflow-auto text-sm"><code class="language-javascript">
+const socket = new WebSocket(`ws://34.172.243.105:8000/ws/predict/`);
+
+let imageBytes = null;
+let startTime = null;
+
+socket.onopen = () => {
+    console.log('WebSocket connection established');
+    document.getElementById('sendButton').disabled = false;
+};
+
+const input = document.getElementById('fileInput');
+input.onchange = (event) => {
+    const file = event.target.files[0];
+
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) {
+        showMessage('File size exceeds 2MB limit.');
+        return;
+    }
+    if (!['image/png', 'image/jpeg'].includes(file.type)) {
+        showMessage('Only PNG and JPEG formats are supported.');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const image = new Image();
+        image.src = e.target.result;
+        image.onload = () => resizeImage(image, file.type);
+    };
+    reader.readAsDataURL(file);
+};
+
+function resizeImage(image, fileType) {
+    const canvas = document.createElement('canvas');
+    const maxWidth = 400;
+    const maxHeight = 400;
+
+    let width = image.width;
+    let height = image.height;
+
+    if (width > height) {
+        if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+        }
+    } else {
+        if (height > maxHeight) {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+        }
+    }
+
+    canvas.width = width;
+    canvas.height = height;
+
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(image, 0, 0, width, height);
+
+    canvas.toBlob((blob) => {
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(blob);
+        reader.onloadend = () => {
+            imageBytes = new Uint8Array(reader.result);
+            console.log('Image resized and ready to send');
+        };
+    }, fileType || 'image/png');
+}
+
+const sendButton = document.getElementById('sendButton');
+sendButton.onclick = () => {
+    if (imageBytes) {
+        document.getElementById('loading').style.display = 'block';
+        startTime = performance.now();
+        socket.send(imageBytes);
+        console.log('Image sent over WebSocket');
+    } else {
+        console.log('No image selected or loaded');
+    }
+};
+
+socket.onmessage = (event) => {
+    document.getElementById('loading').style.display = 'none';
+    const data = JSON.parse(event.data);
+    const endTime = performance.now();
+    const timeTaken = endTime - startTime;
+    console.log('Response from server:', data);
+    console.log(`Time taken for response: ${timeTaken.toFixed(2)} ms`);
+    showMessage('Image processed successfully!', false);
+};
+
+socket.onerror = (error) => {
+    console.error('WebSocket error:', error);
+    showMessage('WebSocket connection error. Please check your connection and try again.');
+};
+
+socket.onclose = () => {
+    console.log('WebSocket connection closed');
+    document.getElementById('sendButton').disabled = true;
+};
+
+function showMessage(message, isError = true) {
+    const messageDiv = document.getElementById('message');
+    messageDiv.textContent = message;
+    messageDiv.style.color = isError ? 'red' : 'green';
+    setTimeout(() => { messageDiv.textContent = ''; }, 5000);
+}
+ </code></pre>
+        </section>
+
+        <!-- Python Example -->
+        <section id="python">
+            <h2 class="text-3xl font-bold mb-4">Python Example</h2>
+            <p class="text-lg mb-4">If you're using Python, the following example shows how to connect to the WebSocket API using the <code>websockets</code> library.</p>
+
+            <pre class="bg-gray-100 rounded-md p-4 overflow-auto text-sm"><code class="language-python">
+import asyncio
+import websockets
+import json
+from PIL import Image
+import io
+
+def resize_image(image_path, max_size=(400, 400)):
+    image = Image.open(image_path)
+    image.thumbnail(max_size)
+    buffer = io.BytesIO()
+    image.save(buffer, format=image.format) 
+    return buffer.getvalue(), image.size, image.format
+
+async def send_image(image_path):
+    uri = "ws://localhost:8000/ws" 
+
+    try:
+        async with websockets.connect(uri) as websocket:
+            image_bytes, resized_size, image_format = resize_image(image_path)
+            await websocket.send(image_bytes)
+            print(f"Image sent to the server: {resized_size}, Format: {image_format}")
+            response = await websocket.recv()
+            data = json.loads(response)
+            if 'objects' in data:
+                with open('response.json', 'w') as json_file:
+                    json.dump(data, json_file, indent=4)
+                print('Response saved to response.json')
+            else:
+                print("Unexpected response format:", data)
+
+    except websockets.exceptions.ConnectionClosedError as e:
+        print(f"WebSocket connection closed unexpectedly: {e}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+if __name__ == "__main__":
+    image_path = input("Enter the path of the image file: ")
+    asyncio.get_event_loop().run_until_complete(send_image(image_path))
+            </code></pre>
+        </section>
+
+        <!-- Flutter Example -->
+        <section id="flutter">
+            <h2 class="text-3xl font-bold mb-4">Flutter (Mobile) Example</h2>
+            <p class="text-lg mb-4">If you're using Flutter, here's an example of how to connect to the WebSocket API to upload images from a mobile device using the <code>web_socket_channel</code> package.</p>
+
+            <pre class="bg-gray-100 rounded-md p-4 overflow-auto text-sm"><code class="language-dart">
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:web_socket_channel/io.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: ImageUploadScreen(),
+    );
+  }
+}
+
+class ImageUploadScreen extends StatefulWidget {
+  @override
+  _ImageUploadScreenState createState() => _ImageUploadScreenState();
+}
+
+class _ImageUploadScreenState extends State<ImageUploadScreen> {
+  final channel = IOWebSocketChannel.connect('ws://localhost:8000/ws');
+  File? _image;
+
+  Future pickImage() async {
+    final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+    setState(() {
+      _image = File(pickedFile.path);
+    });
+  }
+
+  void sendImage() async {
+    if (_image != null) {
+      Uint8List imageBytes = await _image!.readAsBytes();
+      channel.sink.add(imageBytes);
+    }
+  }
+
+  @override
+  void dispose() {
+    channel.sink.close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('WebSocket Image Upload')),
+      body: Center(
+        child: Column(
+          children: [
+            _image == null ? Text('No image selected.') : Image.file(_image!),
+            ElevatedButton(onPressed: pickImage, child: Text('Pick Image')),
+            ElevatedButton(onPressed: sendImage, child: Text('Send Image')),
+          ],
+        ),
+      ),
+    );
+  }
+}
+            </code></pre>
+        </section>
+
+        <!-- Response Format Section -->
+        <section>
+            <h2 class="text-3xl font-bold mb-4">Response Format</h2>
+            <p class="text-lg mb-4">Once the image is processed by the server, the response will be sent back in JSON format. Here’s an example:</p>
+
+            <pre class="bg-gray-100 rounded-md p-4 overflow-auto text-sm"><code class="language-json">
+{
+  "objects": [
+    {
+      "class": "truck",
+      "distance_estimated": 5.764639854431152,
+      "features": {
+        "height": 199.6181640625,
+        "width": 206.4336051940918,
+        "mean_depth": 1.5435211658477783,
+        "depth_mean_trim": 1.4264233112335205,
+        "depth_median": 1.4159464836120605
+      },
+      "bounding_box": {
+        "xmin": 23,
+        "xmax": 230.3593292236328,
+        "ymin": 298,
+        "ymax": 497.7742919921875
+      }
+    }
+  ]
+}           
+            </code></pre>
+        </section>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="max-w-7xl mx-auto text-center space-y-4">
+            <p>&copy; 2024 Your Company. All rights reserved.</p>
+            <p>
+                <a href="mailto:support@yourcompany.com" class="hover:underline">Contact Support</a> | 
+                <a href="/privacy-policy" class="hover:underline">Privacy Policy</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Prism.js for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-dart.min.js"></script>
+</body>
+</html>
