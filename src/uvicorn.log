@@ -1,0 +1,48 @@
+nohup: ignoring input
+/home/oussama_elfila/distance_prediction/venv/lib/python3.11/site-packages/transformers/models/glpn/feature_extraction_glpn.py:28: FutureWarning: The class GLPNFeatureExtractor is deprecated and will be removed in version 5 of Transformers. Please use GLPNImageProcessor instead.
+  warnings.warn(
+/home/oussama_elfila/distance_prediction/src/models/lstm_model.py:36: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  self.model.load_state_dict(torch.load(path, map_location=device), strict=False)
+INFO:     Started server process [2419]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     ('105.191.80.94', 60439) - "WebSocket /ws/predict/" [accepted]
+INFO:     connection open
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     connection closed
+WARNING:  Invalid HTTP request received.
+Client disconnected
+INFO:     180.149.125.170:33569 - "GET /c/ HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     205.210.31.92:60114 - "GET / HTTP/1.1" 200 OK
+INFO:     199.45.155.92:56608 - "GET / HTTP/1.1" 200 OK
+INFO:     199.45.155.92:59274 - "GET / HTTP/1.1" 200 OK
+INFO:     199.45.155.92:59290 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     167.99.178.155:42396 - "GET / HTTP/1.1" 200 OK
+INFO:     167.99.178.155:42402 - "GET /login HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     167.94.138.113:34800 - "GET / HTTP/1.1" 200 OK
+INFO:     167.94.138.113:58848 - "GET / HTTP/1.1" 200 OK
+INFO:     167.94.138.113:58852 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     47.180.136.243:53257 - "GET / HTTP/1.0" 200 OK
+INFO:     57.152.56.118:37446 - "GET / HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+INFO:     ('105.154.199.34', 45254) - "WebSocket /ws/predict/" [accepted]
+INFO:     connection open
+INFO:     connection closed
+Client disconnected
+INFO:     64.62.197.24:18217 - "GET / HTTP/1.1" 200 OK
+INFO:     64.62.197.29:11047 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     64.62.197.29:56325 - "GET /?format=json HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+INFO:     ('105.154.199.34', 45382) - "WebSocket /ws/predict/" [accepted]
+INFO:     connection open
+INFO:     connection closed
+WARNING:  Invalid HTTP request received.
