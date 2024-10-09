@@ -37,7 +37,7 @@ async def get_docs():
         return HTMLResponse(f.read())
 
 
-@app.websocket("/ws")
+@app.websocket("/ws/predict")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     while True:
