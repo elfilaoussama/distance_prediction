@@ -1,5 +1,8 @@
 import torch
 import torch.nn as nn
+from config import CONFIG
+
+device = CONFIG['device']
 
 class Zloc_Estimator(nn.Module):
     def __init__(self, input_dim, hidden_dim, layer_dim, output_dim=1):
@@ -22,6 +25,7 @@ class Zloc_Estimator(nn.Module):
         output = self.fc(out[:, -1])
         return output
 
+
 class LSTMModel():
     def __init__(self, path):
         self.input_dim = 9
@@ -29,12 +33,11 @@ class LSTMModel():
         self.layer_dim = 3
 
         self.model = Zloc_Estimator(self.input_dim, self.hidden_dim, self.layer_dim)
-        self.model.load_state_dict(torch.load(path, map_location='cpu'), strict=False)
-        self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-        self.model.to(self.device)
+        self.model.load_state_dict(torch.load(path, map_location=device), strict=False)
+        self.model.to(device)
 
     def predict(self, input_data):
         self.model.eval()
         with torch.no_grad():
-            input_data = input_data.to(self.device)
+            input_data = input_data.to(device)
             return self.model(input_data)

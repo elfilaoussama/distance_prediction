@@ -1,0 +1,59 @@
+INFO:     Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+INFO:     Started parent process [142722]
+/home/oussama_elfila/distance_prediction/venv/lib/python3.11/site-packages/transformers/models/glpn/feature_extraction_glpn.py:28: FutureWarning: The class GLPNFeatureExtractor is deprecated and will be removed in version 5 of Transformers. Please use GLPNImageProcessor instead.
+  warnings.warn(
+/home/oussama_elfila/distance_prediction/venv/lib/python3.11/site-packages/transformers/models/glpn/feature_extraction_glpn.py:28: FutureWarning: The class GLPNFeatureExtractor is deprecated and will be removed in version 5 of Transformers. Please use GLPNImageProcessor instead.
+  warnings.warn(
+/home/oussama_elfila/distance_prediction/venv/lib/python3.11/site-packages/transformers/models/glpn/feature_extraction_glpn.py:28: FutureWarning: The class GLPNFeatureExtractor is deprecated and will be removed in version 5 of Transformers. Please use GLPNImageProcessor instead.
+  warnings.warn(
+/home/oussama_elfila/distance_prediction/venv/lib/python3.11/site-packages/transformers/models/glpn/feature_extraction_glpn.py:28: FutureWarning: The class GLPNFeatureExtractor is deprecated and will be removed in version 5 of Transformers. Please use GLPNImageProcessor instead.
+  warnings.warn(
+/home/oussama_elfila/distance_prediction/src/models/lstm_model.py:36: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  self.model.load_state_dict(torch.load(path, map_location=device), strict=False)
+INFO:     Started server process [142725]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+/home/oussama_elfila/distance_prediction/src/models/lstm_model.py:36: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  self.model.load_state_dict(torch.load(path, map_location=device), strict=False)
+/home/oussama_elfila/distance_prediction/src/models/lstm_model.py:36: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  self.model.load_state_dict(torch.load(path, map_location=device), strict=False)
+INFO:     Started server process [142724]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Started server process [142726]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+/home/oussama_elfila/distance_prediction/src/models/lstm_model.py:36: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  self.model.load_state_dict(torch.load(path, map_location=device), strict=False)
+INFO:     Started server process [142727]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+ERROR:    [Errno 98] Address already in use
+ERROR:    [Errno 98] Address already in use
+ERROR:    [Errno 98] Address already in use
+INFO:     Received SIGTERM, exiting.
+INFO:     Received SIGHUP, restarting processes.
+INFO:     Waiting for child process [142724]
+/usr/lib/python3.11/multiprocessing/resource_tracker.py:104: UserWarning: resource_tracker: process died unexpectedly, relaunching.  Some resources might leak.
+  warnings.warn('resource_tracker: process died unexpectedly, '
+INFO:     Waiting for child process [142725]
+INFO:     Waiting for child process [142726]
+INFO:     Waiting for child process [142727]
+INFO:     Received SIGHUP, restarting processes.
+INFO:     Terminated child process [142799]
+INFO:     Waiting for child process [142799]
+INFO:     Terminated child process [142800]
+INFO:     Waiting for child process [142800]
+INFO:     Terminated child process [142801]
+INFO:     Waiting for child process [142801]
+INFO:     Terminated child process [142802]
+INFO:     Waiting for child process [142802]
+INFO:     Terminated child process [142803]
+INFO:     Terminated child process [142804]
+INFO:     Terminated child process [142805]
+INFO:     Terminated child process [142806]
+INFO:     Waiting for child process [142803]
+INFO:     Waiting for child process [142804]
+INFO:     Waiting for child process [142805]
+INFO:     Waiting for child process [142806]
+INFO:     Stopping parent process [142722]

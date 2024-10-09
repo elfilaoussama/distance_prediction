@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        h1 { color: #333; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; }
+        code { background-color: #eaeaea; padding: 2px 5px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>API Documentation</h1>
+    <p>Welcome to the API documentation page. Below are the available endpoints:</p>
+    
+    <h2>WebSocket Endpoint</h2>
+    <p>Connect to the WebSocket server to send and receive messages:</p>
+    <pre><code>ws://35.239.115.20:8000/ws/items/</code></pre>
+
+    <h2>HTTP Endpoint</h2>
+    <p>Predict endpoint for processing images:</p>
+    <pre><code>POST /predict/</code></pre>
+    <p>Body: <code>{ "image": "base64_encoded_image_data" }</code></p>
+    
+    <h2>Example Usage</h2>
+    <pre><code>
+    // JavaScript example to connect to the WebSocket
+    const socket = new WebSocket("ws://35.239.115.20:8000/ws/items/");
+    socket.onmessage = function(event) {
+        console.log("Received:", event.data);
+    };
+    </code></pre>
+</body>
+</html>

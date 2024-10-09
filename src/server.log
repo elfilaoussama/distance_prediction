@@ -1,0 +1,200 @@
+nohup: ignoring input
+INFO:     Will watch for changes in these directories: ['/home/oussama_elfila/distance_prediction/src']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [87469] using WatchFiles
+/home/oussama_elfila/distance_prediction/venv/lib/python3.11/site-packages/transformers/models/glpn/feature_extraction_glpn.py:28: FutureWarning: The class GLPNFeatureExtractor is deprecated and will be removed in version 5 of Transformers. Please use GLPNImageProcessor instead.
+  warnings.warn(
+/home/oussama_elfila/distance_prediction/src/models/lstm_model.py:36: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  self.model.load_state_dict(torch.load(path, map_location=device), strict=False)
+INFO:     Started server process [87471]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     ('45.216.69.205', 56418) - "WebSocket /ws/predict/" [accepted]
+INFO:     connection open
+INFO:     connection closed
+INFO:     ('45.216.69.205', 56603) - "WebSocket /ws/predict/" [accepted]
+INFO:     connection open
+INFO:     connection closed
+INFO:     ('45.216.69.205', 56759) - "WebSocket /ws/predict/" [accepted]
+INFO:     connection open
+Client disconnected
+Client disconnected
+INFO:     154.212.141.231:44216 - "GET / HTTP/1.1" 200 OK
+INFO:     154.212.141.231:44292 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     connection closed
+INFO:     ('45.216.69.205', 56805) - "WebSocket /ws/predict/" [accepted]
+INFO:     connection open
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     connection closed
+WARNING:  Invalid HTTP request received.
+Client disconnected
+Client disconnected
+INFO:     162.142.125.219:56502 - "GET / HTTP/1.1" 200 OK
+INFO:     162.142.125.219:56508 - "GET / HTTP/1.1" 200 OK
+INFO:     162.142.125.219:56524 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     45.84.89.2:63142 - "GET / HTTP/1.0" 200 OK
+WARNING:  Invalid HTTP request received.
+INFO:     147.185.132.45:58970 - "GET / HTTP/1.1" 200 OK
+INFO:     205.210.31.152:62158 - "GET / HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+INFO:     ('45.216.192.211', 51219) - "WebSocket /ws/predict/" [accepted]
+INFO:     connection open
+WARNING:  Invalid HTTP request received.
+INFO:     connection closed
+WARNING:  Invalid HTTP request received.
+Client disconnected
+INFO:     199.45.155.78:51196 - "GET / HTTP/1.1" 200 OK
+INFO:     199.45.155.78:51314 - "GET / HTTP/1.1" 200 OK
+INFO:     199.45.155.78:51330 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     ('41.141.96.73', 36068) - "WebSocket /ws/predict/" [accepted]
+INFO:     connection open
+INFO:     connection closed
+INFO:     ('45.216.192.211', 62821) - "WebSocket /ws/predict/" [accepted]
+INFO:     connection open
+INFO:     connection closed
+Client disconnected
+Client disconnected
+INFO:     185.242.226.48:43210 - "GET / HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+INFO:     167.94.146.59:34586 - "GET / HTTP/1.1" 200 OK
+INFO:     167.94.146.59:41480 - "GET / HTTP/1.1" 200 OK
+INFO:     167.94.146.59:41494 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     65.49.20.108:64815 - "GET / HTTP/1.1" 200 OK
+INFO:     65.49.20.76:25297 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     65.49.20.104:9173 - "GET /?format=json HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+INFO:     ('45.216.192.211', 63446) - "WebSocket /ws/predict/" [accepted]
+INFO:     connection open
+WARNING:  Invalid HTTP request received.
+INFO:     172.168.40.211:52846 - "GET / HTTP/1.1" 200 OK
+INFO:     205.210.31.178:64866 - "GET / HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+INFO:     199.45.155.83:59396 - "GET / HTTP/1.1" 200 OK
+INFO:     199.45.155.83:51134 - "GET / HTTP/1.1" 200 OK
+INFO:     199.45.155.83:51138 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     connection closed
+Client disconnected
+INFO:     45.84.89.2:48538 - "GET / HTTP/1.1" 200 OK
+INFO:     205.210.31.6:58740 - "GET / HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+INFO:     167.94.138.38:49262 - "GET / HTTP/1.1" 200 OK
+INFO:     167.94.138.38:52930 - "GET / HTTP/1.1" 200 OK
+INFO:     167.94.138.38:52942 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     147.135.23.100:40345 - "GET / HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     137.74.239.147:36119 - "GET / HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     159.223.154.140:34300 - "GET / HTTP/1.1" 200 OK
+INFO:     159.223.154.140:34308 - "GET /login HTTP/1.1" 404 Not Found
+INFO:     185.189.182.234:42676 - "GET / HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     115.231.78.14:17039 - "GET / HTTP/1.1" 200 OK
+INFO:     115.231.78.14:54891 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     115.231.78.14:48955 - "GET /robots.txt HTTP/1.1" 404 Not Found
+INFO:     87.236.176.216:33639 - "GET / HTTP/1.1" 200 OK
+INFO:     103.203.57.20:38532 - "GET / HTTP/1.1" 200 OK
+INFO:     206.168.34.212:39870 - "GET / HTTP/1.1" 200 OK
+INFO:     206.168.34.212:39924 - "GET / HTTP/1.1" 200 OK
+INFO:     206.168.34.212:39940 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     162.142.125.221:33566 - "GET / HTTP/1.1" 200 OK
+INFO:     162.142.125.221:38342 - "GET / HTTP/1.1" 200 OK
+INFO:     162.142.125.221:38344 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     199.45.154.158:34260 - "GET / HTTP/1.1" 200 OK
+INFO:     199.45.154.158:34346 - "GET / HTTP/1.1" 200 OK
+INFO:     199.45.154.158:58396 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     45.84.89.2:63142 - "GET / HTTP/1.0" 200 OK
+INFO:     172.232.38.131:34616 - "GET / HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+INFO:     205.210.31.146:58606 - "GET / HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     159.89.120.172:34446 - "GET / HTTP/1.1" 200 OK
+INFO:     159.89.120.172:34456 - "GET /login HTTP/1.1" 404 Not Found
+INFO:     198.235.24.192:60996 - "GET / HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+INFO:     64.62.156.54:10717 - "GET / HTTP/1.1" 200 OK
+INFO:     64.62.156.52:7087 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     64.62.156.60:41739 - "GET /?format=json HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     206.168.34.221:58252 - "GET / HTTP/1.1" 200 OK
+INFO:     206.168.34.221:58428 - "GET / HTTP/1.1" 200 OK
+INFO:     206.168.34.221:58444 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     64.62.197.228:31523 - "GET / HTTP/1.1" 200 OK
+INFO:     64.62.197.241:38073 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     64.62.197.232:20413 - "GET /?format=json HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     185.191.126.213:35048 - "GET / HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     105.191.80.94:62205 - "GET / HTTP/1.1" 200 OK
+INFO:     105.191.80.94:62205 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     ('105.191.80.94', 62289) - "WebSocket /ws" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('105.191.80.94', 62318) - "WebSocket /ws/predict/" [accepted]
+INFO:     connection open
+INFO:     connection closed
+WARNING:  Invalid HTTP request received.
+Client disconnected
+INFO:     185.191.126.213:41820 - "GET / HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     45.84.89.2:35960 - "GET / HTTP/1.1" 200 OK
+INFO:     ('105.191.80.94', 52441) - "WebSocket /ws/predict/" [accepted]
+INFO:     connection open
+INFO:     ('41.141.106.153', 60290) - "WebSocket /ws/predict" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('41.141.106.153', 60308) - "WebSocket /ws/predict" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('41.141.106.153', 60446) - "WebSocket /ws/predict" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('41.141.106.153', 60456) - "WebSocket /ws/predict" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('41.141.106.153', 21702) - "WebSocket /ws/predict" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('41.141.106.153', 60536) - "WebSocket /ws/predict" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('41.141.106.153', 60554) - "WebSocket /ws/predict" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     Shutting down
+INFO:     connection closed
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [87471]

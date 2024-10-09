@@ -1,33 +1,46 @@
 import os
-import json
 from PIL import Image
 import cv2
+import numpy as np
+from fastapi import FastAPI, File, UploadFile, WebSocket, WebSocketDisconnect
+from fastapi.responses import HTMLResponse
+from io import BytesIO
 from models.detr_model import load_detr_model, detect_objects
 from models.glpn_model import load_glpn_model, estimate_depth
 from models.lstm_model import LSTMModel
 from utils.depth_processing import overlap_depth_with_boxes
-from utils.visualization import plot_overlapping_boxes
 from config import CONFIG
 from utils.classes import CLASSES
 
-if __name__ == "__main__":
-    # Load the models
-    device = CONFIG['device']
-    detr_model, detr_processor = load_detr_model(device)
-    glpn_model, glpn_extractor = load_glpn_model(device)
-    distance_model = LSTMModel(CONFIG['lstm_model_path'])
+app = FastAPI()
 
-    # Load a sample image
-    sample_image = Image.open(CONFIG['image_path'])
+# Load the models
+device = CONFIG['device']
+detr_model, detr_processor = load_detr_model(device)
+glpn_model, glpn_extractor = load_glpn_model(device)
+distance_model = LSTMModel(CONFIG['lstm_model_path'])
+
+@app.get("/")
+def read_root():
+    file_path = os.path.join(os.path.dirname(__file__), "api_documentation.html")
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="Documentation file not found")
+    with open(file_path) as f:
+        return f.read()
+
+@app.post("/predict/")
+async def predict(file: UploadFile = File(...)):
+    # Load the image
+    image = Image.open(file.file).convert('RGB')
 
     # DETR Object Detection
-    scores, boxes, img_shape, detected_classes = detect_objects(sample_image, detr_model, detr_processor, device)
+    scores, boxes, img_shape, detected_classes = detect_objects(image, detr_model, detr_processor, device)
 
     # GLPN Depth Estimation
-    depth_map = estimate_depth(sample_image, glpn_model, glpn_extractor, img_shape, device)
+    depth_map = estimate_depth(image, glpn_model, glpn_extractor, img_shape, device)
 
     # Resize depth map to match the original image size
-    depth_map_resized = cv2.resize(depth_map, sample_image.size, interpolation=cv2.INTER_LINEAR)
+    depth_map_resized = cv2.resize(depth_map, image.size, interpolation=cv2.INTER_LINEAR)
 
     # Overlap depth map and bounding boxes, and get depth features
     depth_features_matrix = overlap_depth_with_boxes(depth_map_resized, boxes)
@@ -35,25 +48,70 @@ if __name__ == "__main__":
     # Prepare JSON output for each object
     output_json = []
     for i, features in enumerate(depth_features_matrix):
-        features = features.unsqueeze(0).unsqueeze(0)  # Add extra dimension for batch and sequence
-        distance = distance_model.predict(features)  # Predict distance for each object
-        """object_info = {
+        distance = distance_model.predict(features.unsqueeze(0).unsqueeze(0))  # Predict distance for each object
+        object_info = {
             "class": CLASSES[detected_classes[i].item()],
             "distance_estimated": distance.item(),
             "features": {
-                "xmin": features[0][0][0].item(),
-                "ymin": features[0][0][1].item(),
-                "xmax": features[0][0][2].item(),
-                "ymax": features[0][0][3].item(),
-                "mean_depth": features[0][0][4].item(),
-                "min_depth": features[0][0][5].item(),
-                "max_depth": features[0][0][6].item(),
-                "width": features[0][0][7].item(),
-                "height": features[0][0][8].item()
+                "xmin": features[0].item(),
+                "ymin": features[1].item(),
+                "xmax": features[2].item(),
+                "ymax": features[3].item(),
+                "mean_depth": features[6].item(),
+                "min_depth": features[7].item(),
+                "max_depth": features[8].item(),
+                "width": features[4].item(),
+                "height": features[5].item()
             }
         }
-        output_json.append(object_info)"""
+        output_json.append(object_info)
 
-    # Save results to JSON
-    with open('results/output.json', 'w') as f:
-        json.dump(output_json, f)
+    return {"objects": output_json}
+
+@app.websocket("/ws/predict/")
+async def websocket_predict(websocket: WebSocket):
+    await websocket.accept()
+    try:
+        while True:
+            data = await websocket.receive_bytes()
+            image = Image.open(BytesIO(data)).convert('RGB')
+
+            # DETR Object Detection
+            scores, boxes, img_shape, detected_classes = detect_objects(image, detr_model, detr_processor, device)
+
+            # GLPN Depth Estimation
+            depth_map = estimate_depth(image, glpn_model, glpn_extractor, img_shape, device)
+
+            # Resize depth map to match the original image size
+            depth_map_resized = cv2.resize(depth_map, image.size, interpolation=cv2.INTER_LINEAR)
+
+            # Overlap depth map and bounding boxes, and get depth features
+            depth_features_matrix = overlap_depth_with_boxes(depth_map_resized, boxes)
+
+            # Prepare JSON output for each object
+            output_json = []
+            for i, features in enumerate(depth_features_matrix):
+                distance = distance_model.predict(features.unsqueeze(0).unsqueeze(0))  # Predict distance for each object
+                object_info = {
+                    "class": CLASSES[detected_classes[i].item()],
+                    "distance_estimated": distance.item(),
+                    "features": {
+                        "xmin": features[0].item(),
+                        "ymin": features[1].item(),
+                        "xmax": features[2].item(),
+                        "ymax": features[3].item(),
+                        "mean_depth": features[6].item(),
+                        "min_depth": features[7].item(),
+                        "max_depth": features[8].item(),
+                        "width": features[4].item(),
+                        "height": features[5].item()
+                    }
+                }
+                output_json.append(object_info)
+
+            await websocket.send_json({"objects": output_json})
+
+    except WebSocketDisconnect:
+        print("Client disconnected")
+
+
