@@ -1,0 +1,34 @@
+# Use a specific Python version
+FROM python:3.11.10
+
+# Set the working directory inside the container
+WORKDIR /usr/src/app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip
+RUN pip install --upgrade pip
+
+# Install Python dependencies via pip (without specific versions, latest will be installed)
+RUN pip install transformers matplotlib pandas opencv-python uvicorn fastapi
+
+# Copy your application code into the container
+COPY . .
+
+# Expose the port for FastAPI application (8001)
+EXPOSE 8001
+
+# Define environment variable
+ENV NAME World
+
+# Git configuration
+RUN git config --global user.name "Oussama El fila" && \
+    git config --global user.email "elfilaoussama@gmail.com"
+
+# Specify the command to run the application
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001", "--workers", "4"]

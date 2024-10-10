@@ -4,3 +4,9 @@ transformers
 matplotlib
 pandas
 opencv-python
+uvicorn 
+fastapi
+setuptools
+scipy
+scikit-learn
+websockets

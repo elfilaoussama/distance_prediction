@@ -1,7 +1,10 @@
+import io
 import torch
+import base64
 from config import CONFIG
 from torchvision import transforms
 from matplotlib import pyplot as plt
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from transformers import DetrForObjectDetection, DetrImageProcessor
 
 class DETR:
@@ -69,9 +72,8 @@ class DETR:
             bboxes (Tensor): Bounding boxes for detected objects.
         """
         # Convert image to RGB format for matplotlib
-        plt.figure(figsize=(10, 6))
-        plt.imshow(im)
-        ax = plt.gca()
+        fig, ax = plt.subplots(figsize=(10, 6))
+        ax.imshow(im)
         
         # Iterate over detections and draw bounding boxes and labels
         for p, (xmin, ymin, xmax, ymax), color in zip(probas, bboxes, self.COLORS * 100):
@@ -84,8 +86,22 @@ class DETR:
             text = f'{self.CLASSES[cl]}: {p[cl].detach().cpu().numpy():0.2f}'  # Detach probability as well
             ax.text(xmin, ymin, text, fontsize=15, bbox=dict(facecolor='yellow', alpha=0.5))
         
-        plt.axis('off')
-        plt.show()
+        ax.axis('off')
+
+        # Convert the plot to a PIL Image and then to bytes
+        canvas = FigureCanvas(fig)
+        buf = io.BytesIO()
+        canvas.print_png(buf)
+        buf.seek(0)
+
+        # Base64 encode the image
+        img_bytes = buf.getvalue()
+        img_base64 = base64.b64encode(img_bytes).decode('utf-8')
+
+        # Close the figure to release memory
+        plt.close(fig)
+
+        return img_base64
 
 
 
